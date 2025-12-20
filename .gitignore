@@ -2,8 +2,7 @@
 __pycache__/
 *.ipynb_checkpoints
 .DS_Store
-.monitoramento-agua-slz/
-monitoramento-agua-slz/
+venv-monitoramento-agua-slz/
 
 data/
 *.xlsx
