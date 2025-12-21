@@ -1,0 +1,136 @@
+municipio,rio,data,hora,latitude,longitude,choveu,ph,od,turbidez,temperatura,condutividade,std,fosforo,nitrogenio,salinidade,rio_original,status_ph,status_od,status_turbidez,indice_problemas,status_ph_graf,status_od_graf,status_turb_graf
+SAO LUIS,RIO CALHAU,2024-09-12,10:55:00,-2.49149,-44.25874,não,7.37,1.69,18.99,28.12,5174.0,3363.41,,,2.77,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2024-09-12,12:45:00,-2.52324,-44.20012,não,6.78,3.54,31.06,27.17,71.7,46.1,,,0.03,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2024-09-12,11:50:00,-2.4786,-44.21024,não,7.2,6.66,1.48,28.66,244.3,158.75,,,0.11,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2024-09-11,10:15:00,-2.53246,-44.27335,não,7.7,2.88,10.98,28.65,32928.0,21429.33,,,20.54,RIO ANIL,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2024-09-11,10:42:00,-2.55823,-44.29807,não,8.5,7.93,31.21,29.7,37952.0,24674.89,,,23.97,RIO BACANGA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2024-09-11,11:30:00,-2.65094,-44.21425,não,7.73,5.82,14.28,29.71,36912.0,23998.21,,,23.27,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2024-09-10,15:00:00,-2.66701,-44.32009,não,7.59,8.44,26.12,30.03,34132.0,22219.42,,,21.42,RIO DOS CACHORROS,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2024-09-10,15:40:00,-2.68895,-44.2105,não,7.74,6.19,221.67,30.99,38729.0,25172.23,,,25.49,RIO TIBIRI,Conforme,Conforme,Não Conforme,1,Dentro do Padrão,Dentro do Padrão,Fora do Padrão
+SAO LUIS,RIO CALHAU,2024-03-07,07:27:00,-2.48391,-44.26411,sim,6.94,2.91,23.48,27.8,15348.0,9957.42,,,8.87,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2024-03-07,09:30:00,-2.52327,-44.20014,sim,5.9,3.54,25.23,26.87,79.0,51.33,,,0.04,RIO ITAPIRACO,Não Conforme,Não Conforme,Conforme,2,Fora do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2024-03-07,08:30:00,-2.47785,-44.21043,sim,6.43,6.33,9.6,27.66,252.9,164.3,,,0.12,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2024-03-06,08:10:00,-2.65084,-44.21442,sim,7.81,4.89,40.17,29.68,16401.0,10659.89,,,9.55,RIO TIBIRI,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2023-11-23,08:20:00,-2.49149,-44.25874,,6.87,0.96,16.39,27.81,20832.0,2211940.0,,,12.45,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2023-11-22,16:26:00,-2.52324,-44.20012,,8.31,1.32,15.66,28.38,77.6,200.0,,,0.05,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2023-11-21,14:15:00,-2.4786,-44.21024,,7.05,6.15,7.05,28.64,,320.0,,,0.11,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2023-11-20,09:40:00,-2.53246,-44.27335,,6.94,4.15,27.83,29.02,39426.0,24080.0,,,25.05,RIO ANIL,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2023-11-20,10:20:00,-2.55823,-44.29807,,8.34,8.02,33.64,30.33,46880.0,29800.0,,,30.31,RIO BACANGA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2023-11-20,10:56:00,-2.66701,-44.32009,,7.72,6.18,21.83,29.84,44510.0,26820.0,,,28.7,RIO DOS CACHORROS,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2023-11-20,11:48:00,-2.68895,-44.2105,,7.8,6.19,30.43,30.47,46715.0,28240.0,,,30.17,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2023-11-20,13:20:00,-2.65094,-44.21425,,7.7,5.12,22.3,29.99,45433.0,27540.0,,,29.28,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2023-07-18,05:45:00,-2.52951,-44.27657,,7.15,51.2,85.02,28.9,35443.0,60.0,,,22.23,RIO ANIL,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2023-07-18,06:15:00,-2.55799,-44.29814,,7.32,4.16,12.65,27.15,23410.0,80.0,,,14.2,RIO BACANGA,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2023-07-18,12:40:00,-2.484,-44.2641,,6.55,1.86,18.2,28.12,9670.0,240.0,,,5.46,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2023-07-18,07:06:00,-2.66702,-44.32008,,7.18,5.39,22.4,29.4,32225.0,40.0,,,20.03,RIO DOS CACHORROS,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2023-07-18,11:15:00,-2.52328,-44.20015,,6.08,4.9,13.9,26.95,62.0,6700.0,,,0.3,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2023-07-18,12:10:00,-2.47877,-44.21054,,6.18,6.4,3.78,29.48,250.6,21700.0,,,0.12,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2023-07-18,08:03:00,-2.65082,-44.21394,,7.32,5.46,6.7,29.02,29854.0,22060.0,,,18.37,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2023-02-15,09:02:00,-2.484,-44.2641,Sim,6.6,6.14,15.66,27.41,5647.0,2020.0,,,3.05,RIO CALHAU,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2023-02-15,10:16:00,-2.52328,-44.20015,Sim,6.21,3.82,31.66,26.75,87.2,320.0,,,0.04,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2023-02-15,09:30:00,-2.47877,-44.21054,Sim,6.33,6.26,4.67,27.61,239.8,240.0,,,0.11,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2023-02-14,10:14:00,-2.52951,-44.27657,Sim,7.25,3.86,14.04,28.45,18014.0,11040.0,,,10.59,RIO ANIL,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2023-02-14,10:45:00,-2.55799,-44.29814,Sim,8.57,13.02,39.6,30.37,18400.0,11260.0,,,10.81,RIO BACANGA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2023-02-14,11:23:00,-2.66702,-44.32008,Sim,7.72,7.68,14.2,29.52,33371.0,21660.0,,,20.66,RIO DOS CACHORROS,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2023-02-14,12:19:00,-2.68909,-44.21056,Sim,8.04,7.36,11.29,29.32,20447.0,4500.0,,,12.15,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2023-02-14,13:21:00,-2.65082,-44.21394,Sim,7.73,5.24,33.15,28.99,20628.0,14960.0,,,12.27,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2022-09-29,07:23:00,-2.52398,-44.2791,não,7.87,5.07,62.3,27.81,43198.0,30060.0,,,27.72,RIO ANIL,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2022-09-29,11:06:00,-2.55841,-44.29817,não,8.71,8.18,21.72,29.07,40126.0,27220.0,,,25.5,RIO BACANGA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2022-09-29,10:22:00,-2.66696,-44.32019,não,7.96,5.2,68.33,28.57,41060.0,26680.74,,,26.18,RIO DOS CACHORROS,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2022-09-29,09:36:00,-2.68906,-44.21056,não,7.91,5.25,13.86,28.55,38397.0,29320.0,,,24.33,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2022-09-29,08:23:00,-2.65086,-44.21352,não,7.83,4.68,47.81,28.54,35775.0,27140.0,,,23.89,RIO TIBIRI,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2022-09-27,17:36:00,-2.49149,-44.25873,não,7.06,1.75,10.99,28.15,18708.0,11760.0,,,11.04,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2022-09-27,16:37:00,-2.47785,-44.2104,não,6.91,5.94,80.33,27.95,244.0,200.0,,,0.11,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2022-09-19,09:15:00,-2.52323,-44.20015,não,5.82,2.66,55.4,25.79,65.8,20460.0,,,0.03,RIO ITAPIRACO,Não Conforme,Não Conforme,Conforme,2,Fora do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2022-05-06,09:15:00,-2.53246,-44.27335,Sim,7.31,3.33,11.84,28.48,19137.0,9400.0,0.08,1.82,11.28,RIO ANIL,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2022-05-06,10:00:00,-2.55823,-44.29807,Sim,7.23,4.52,153.3,29.1,1678.0,920.0,0.0,0.61,0.84,RIO BACANGA,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO DOS CACHORROS,2022-05-06,11:05:00,-2.66701,-44.32009,Sim,7.49,4.78,14.45,28.94,11070.0,5400.0,0.15,1.21,6.27,RIO DOS CACHORROS,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2022-05-06,12:04:00,-2.68895,-44.2105,Sim,7.96,6.02,37.29,31.94,5063.0,540.0,0.0,0.0,2.69,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2022-05-06,14:13:00,-2.65094,-44.21425,Sim,7.94,4.33,124.6,30.31,4347.0,2280.0,0.0,0.12,2.29,RIO TIBIRI,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO CALHAU,2022-05-03,10:15:00,-2.49149,-44.25874,Sim,6.88,3.04,17.8,27.53,13140.0,6960.0,0.11,1.82,7.46,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2022-05-03,09:02:00,-2.4786,-44.21024,Sim,7.0,6.45,43.0,27.31,247.8,540.0,0.0,0.24,0.12,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2022-05-02,10:05:00,-2.52324,-44.20012,Sim,6.06,3.54,20.98,26.23,90.5,280.0,0.0,0.12,0.04,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2021-11-24,07:34:00,-2.68894,-44.21046,Não,7.64,5.5,47.3,28.88,42737.0,26580.0,0.0,0.36,27.38,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2021-11-24,08:57:00,-2.65085,-44.21441,Não,7.43,5.19,44.3,29.31,42078.0,25220.0,0.24,0.12,26.83,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2021-11-23,10:03:00,-2.53246,-44.27335,Não,7.72,5.7,14.01,29.96,32010.0,18700.0,0.72,3.64,19.75,RIO ANIL,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2021-11-23,09:39:00,-2.55823,-44.29807,Não,8.49,9.42,31.7,29.79,42912.0,26080.0,0.0,1.21,27.49,RIO BACANGA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2021-11-23,12:58:00,-2.484,-44.26415,Não,6.82,1.79,13.4,30.07,17.02,9860.0,0.24,3.64,9.96,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2021-11-23,10:58:00,-2.66701,-44.32009,Não,7.84,5.57,27.07,29.7,42287.0,29280.0,0.98,0.06,27.7,RIO DOS CACHORROS,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2021-11-23,08:06:00,-2.52353,-44.20008,Não,6.21,2.08,70.5,26.53,93.6,60.0,0.0,0.61,0.04,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2021-11-22,09:29:00,-2.4786,-44.2106,Não,5.86,5.8,1.66,27.56,226.4,140.0,0.36,0.3,0.11,RIO JAGUAREMA,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2021-03-03,09:00:00,-2.55823,-44.29807,,8.83,11.97,12.4,30.26,14810.0,7600.0,,,8.98,RIO BACANGA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2021-03-03,09:33:00,-2.49149,-44.25874,,6.79,0.5,23.88,27.7,357.9,160.0,,,0.17,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2021-03-03,10:55:00,-2.4786,-44.21024,,6.26,6.14,6.5,28.36,251.6,440.0,,,0.12,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2021-03-02,07:22:00,-2.53246,-44.27335,,7.79,3.87,409.65,28.17,45530.0,27820.0,,,29.48,RIO ANIL,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO DOS CACHORROS,2021-03-02,08:28:00,-2.66701,-44.32009,,7.7,3.57,83.6,28.47,35860.0,23180.0,,,22.59,RIO DOS CACHORROS,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2021-03-02,13:35:00,-2.52324,-44.20012,,6.02,3.12,48.35,26.8,83.9,300.0,,,0.04,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2021-03-02,09:30:00,-2.68895,-44.2105,,7.69,4.45,33.9,28.42,24650.0,14300.0,,,14.8,RIO TIBIRI,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2021-03-02,11:00:00,-2.65094,-44.21425,,7.43,3.88,171.0,28.66,24480.0,440.0,,,14.8,RIO TIBIRI,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO BACANGA,2020-11-24,12:35:00,-2.56614,-44.28432,,10.12,11.39,22.3,30.16,40720.0,27880.0,,,25.9,RIO BACANGA,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2020-11-24,16:09:00,-2.49157,-44.25905,,7.06,0.82,98.8,29.19,484.2,40.0,,,0.23,RIO CALHAU,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2020-11-24,17:37:00,-2.52325,-44.20012,,7.53,2.26,63.4,27.08,59.7,340.0,,,0.03,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2020-11-24,15:37:00,-2.47872,-44.21058,,7.52,6.17,2.6,28.3,22050.0,420.0,,,0.1,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2020-11-23,13:28:00,-2.53225,-44.2734,,9.65,9.65,15.6,29.23,36615.0,19640.0,,,23.0,RIO ANIL,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2020-11-23,14:28:00,-2.667,-44.32008,,9.18,5.64,9.04,29.4,42050.0,25860.0,,,26.88,RIO DOS CACHORROS,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2020-11-23,17:26:00,-2.68895,-44.21004,,8.85,5.62,11.02,28.6,41.47,26260.0,,,26.49,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2020-11-23,16:01:00,-2.65085,-44.21423,,8.88,5.46,36.3,29.1,40157.0,24600.0,,,25.54,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2019-11-13,07:55:00,-2.56239,-44.28729,Não,1.56,2.2,246.0,,23610.0,15100.0,,,14.5,RIO BACANGA,Não Conforme,Não Conforme,Não Conforme,3,Fora do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO JAGUAREMA,2019-11-13,09:23:00,-2.47785,-44.2104,Não,6.25,84.7,1.99,27.4,206.2,100.0,,,0.1,RIO JAGUAREMA,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2019-11-12,07:41:00,-2.52398,-44.2791,Não,7.75,5.35,50.4,28.19,50583.0,31260.0,,,32.8,RIO ANIL,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2019-11-12,13:10:00,-2.49303,-44.25415,Não,1.99,1.3,9.35,28.38,424.3,40.0,,,0.2,RIO CALHAU,Não Conforme,Não Conforme,Conforme,2,Fora do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2019-11-12,08:49:00,-2.66709,-44.32006,Não,7.54,4.74,107.98,28.58,22200.0,29000.0,,,29.95,RIO DOS CACHORROS,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO ITAPIRACO,2019-11-12,14:24:00,-2.52331,-44.20011,Não,5.94,1.97,18.8,28.03,64.6,2260.0,,,0.03,RIO ITAPIRACO,Não Conforme,Não Conforme,Conforme,2,Fora do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2019-11-12,09:50:00,-2.68891,-44.21049,Não,7.61,4.98,499.0,29.37,46110.0,32540.0,,,29.82,RIO TIBIRI,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO TIBIRI,2019-11-12,11:12:00,-2.65075,-44.21424,Não,7.59,5.5,52.0,30.27,41810.0,27060.0,,,26.69,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2019-09-21,09:50:00,-2.47858,-44.2103,Não,5.74,6.6,1.72,27.3,216.5,,,,0.1,RIO JAGUAREMA,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2019-09-20,15:30:00,-2.52333,-44.20012,Não,6.34,2.2,28.85,27.35,66.5,,,,0.03,RIO ITAPIRACO,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2019-09-19,08:30:00,-2.56592,-44.28427,Não,4.2,5.23,4.87,28.55,36708.0,,,,23.15,RIO BACANGA,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2019-09-19,13:15:00,-2.4914,-44.25871,Não,4.33,0.25,28.7,28.7,404.9,,,,0.19,RIO CALHAU,Não Conforme,Não Conforme,Conforme,2,Fora do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2019-09-18,07:45:00,-2.53104,-44.27464,Não,7.77,5.3,30.7,27.6,44830.0,,,,28.9,RIO ANIL,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2019-09-18,12:00:00,-2.65107,-44.21425,Não,7.51,4.22,30.15,28.89,36389.0,,,,22.89,RIO TIBIRI,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2019-09-17,10:20:00,-2.68905,-44.21021,Não,7.94,6.27,20.3,29.09,40483.0,,,,25.77,RIO TIBIRI,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2019-09-16,09:03:00,-2.66701,-44.32013,Não,7.65,5.43,23.93,28.46,41359.0,,,,26.41,RIO DOS CACHORROS,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2019-07-03,08:51:00,-2.56591,-44.2844,NÃO,7.03,5.2,14.01,27.3,12156.0,,,,6.89,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2019-07-02,15:10:00,-2.49138,-44.25884,NÃO,10.98,0.85,48.7,29.4,406.4,,,,0.19,,Não Conforme,Não Conforme,Conforme,2,Fora do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2019-07-02,14:53:00,-2.47871,-44.2106,NÃO,6.5,6.18,10.58,29.6,264.4,,,,0.12,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2019-07-02,07:15:00,-2.53233,-44.27333,NÃO,7.83,5.15,20.6,29.92,40550.0,,,,26.1,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2019-07-02,10:40:00,-2.65098,-44.21401,NÃO,7.7,6.37,37.9,29.98,19998.0,,,,11.85,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2019-07-02,08:22:00,-2.66699,-44.32016,NÃO,7.73,5.26,37.67,29.21,30881.0,,,,19.03,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2019-07-02,09:05:00,-2.68907,-44.21015,NÃO,7.54,5.3,61.5,28.73,26624.0,,,,16.23,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2019-06-02,14:01:00,-2.52372,-44.2037,NÃO,6.88,1.65,19.2,27.79,573.0,,,,0.27,,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2019-03-22,12:57:00,-2.49127,-44.2591,NÃO,6.56,3.44,,28.2,314.0,,,,0.1,,Conforme,Não Conforme,Sem Dado,1,Dentro do Padrão,Fora do Padrão,Sem Dado
+SAO LUIS,RIO JAGUAREMA,2019-03-22,11:47:00,-2.47836,-44.21042,NÃO,6.15,6.31,23.4,27.63,235.4,,,,0.11,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2019-03-22,10:23:00,-2.65099,-44.21411,NÃO,7.26,2.88,528.3,28.83,13520.0,,,,7.75,,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO TIBIRI,2019-03-22,08:30:00,-2.68913,-44.21022,NÃO,7.5,3.52,150.2,28.87,16430.0,,,,9.7,,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO ANIL,2019-03-21,08:19:00,-2.523875,-44.279067,NÃO,7.91,5.42,93.19,28.85,42446.0,,,,27.11,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2019-03-21,09:09:00,-2.56586,-44.28444,NÃO,7.2,2.87,171.3,27.72,541.0,,,,0.26,,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO DOS CACHORROS,2019-03-21,10:00:00,-2.66709,-44.32008,NÃO,7.62,3.78,342.2,28.84,28176.0,,,,17.16,,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO ITAPIRACO,2019-03-21,15:11:00,-2.52304,-44.20021,NÃO,6.82,18.1,22.01,29.09,490.3,,,,0.23,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2018-11-29,09:27:00,-2.49138,-44.25884,NÃO,7.6,3.84,,28.75,366.0,,,,0.12,,Conforme,Não Conforme,Sem Dado,1,Dentro do Padrão,Fora do Padrão,Sem Dado
+SAO LUIS,RIO JAGUAREMA,2018-11-29,09:50:00,-2.47871,-44.2106,NÃO,5.96,5.97,1.73,27.59,199.7,,,,0.09,,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2018-11-28,09:53:00,-2.53233,-44.27333,NÃO,7.6,2.87,77.48,28.47,50718.0,,,,33.16,,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2018-11-28,09:32:00,-2.56591,-44.2844,NÃO,8.39,1.99,12.59,29.6,49860.0,,,,32.71,,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2018-11-28,12:21:00,-2.65098,-44.21401,NÃO,7.71,4.41,164.47,29.1,54744.9,,,,33.11,,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO DOS CACHORROS,2018-11-28,10:51:00,-2.66699,-44.32016,NÃO,7.68,4.19,21.33,28.79,56203.0,,,,34.41,,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2018-11-28,11:23:00,-2.68907,-44.21015,NÃO,7.73,5.36,66.77,28.87,52012.3,,,,33.74,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2018-11-28,14:00:00,-2.52372,-44.2037,NÃO,6.9,0.35,16.97,26.45,70.6,,,,0.03,,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2018-03-27,08:30:00,-2.650839,-44.214424,NÃO,7.48,3.65,65.5,27.52,11674.1,,,,6.62,,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2018-03-15,14:44:00,-2.477846,-44.210433,NÃO,5.6,6.15,163.11,27.66,183.0,,,,0.08,,Não Conforme,Conforme,Não Conforme,2,Fora do Padrão,Dentro do Padrão,Fora do Padrão
+SAO LUIS,RIO DOS CACHORROS,2018-03-15,16:31:00,-2.667239,-44.319671,NÃO,6.45,5.82,28.5,29.28,31490.1,,,,19.32,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2018-03-15,15:40:00,-2.688906,-44.209937,NÃO,5.9,5.99,68.5,29.894,17027.5,,,,9.77,,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2017-12-28,06:45:00,-2.651,-44.215,,7.58,5.06,10.83,28.78,47486.5,,,,30.8,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2017-12-07,10:34:00,-2.524,-44.2,,7.11,0.54,19.47,25.86,325.7,,,,0.14,,Conforme,Não Conforme,Conforme,1,Dentro do Padrão,Fora do Padrão,Dentro do Padrão
+SAO LUIS,RIO CALHAU,2017-12-06,11:31:00,-2.492,-44.259,,7.04,4.64,,34.0,103.0,,,,0.08,,Conforme,Não Conforme,Sem Dado,1,Dentro do Padrão,Fora do Padrão,Sem Dado
+SAO LUIS,RIO ANIL,2017-12-06,11:12:00,-2.527,-44.279,,7.59,5.4,97.76,27.9,49928.1,,,,35.46,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO BACANGA,2017-12-06,10:32:00,-2.566,-44.285,,7.68,3.58,328.41,30.71,32780.4,,,,23.15,,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO TIBIRI,2017-12-06,09:05:00,-2.689,-44.21,,7.63,5.65,55.91,27.98,48932.0,,,,34.62,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO JAGUAREMA,2017-12-05,18:00:00,-2.479,-44.21,,5.43,6.52,1.07,27.43,164.3,,,,0.08,,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2017-12-05,13:54:00,-2.667,-44.32,,7.5,3.68,647.17,30.93,53.75,,,,31.58,,Conforme,Não Conforme,Não Conforme,2,Dentro do Padrão,Fora do Padrão,Fora do Padrão
+SAO LUIS,RIO TIBIRI,2017-10-27,17:36:00,-2.650839,-44.214424,NÃO,8.08,8.07,43.6,30.79,46057.3,,,,14.37,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO TIBIRI,2017-10-27,16:11:00,-2.688906,-44.209937,NÃO,7.72,8.14,9.72,29.02,30240.7,,,,19.66,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ITAPIRACO,2017-09-12,17:30:00,-2.527088,-44.202777,NÃO,,,,,,,,,,,Sem Dado,Sem Dado,Sem Dado,0,Sem Dado,Sem Dado,Sem Dado
+SAO LUIS,RIO CALHAU,2017-09-11,16:30:00,-2.491219,-44.258821,NÃO,7.2,0.0,,29.15,376000.0,,,,0.1,,Conforme,Não Conforme,Sem Dado,1,Dentro do Padrão,Fora do Padrão,Sem Dado
+SAO LUIS,RIO BACANGA,2017-09-05,13:20:00,-2.566936,-44.284605,NÃO,7.61,7.96,46.1,36.54,51977.0,,,,24.48,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO DOS CACHORROS,2017-09-05,11:40:00,-2.667239,-44.319671,NÃO,7.6,7.2,103.9,29.4,38708.0,,,,22.4,,Conforme,Conforme,Não Conforme,1,Dentro do Padrão,Dentro do Padrão,Fora do Padrão
+SAO LUIS,RIO JAGUAREMA,2017-09-04,14:39:00,-2.477846,-44.210433,NÃO,5.3,6.5,15.61,28.2,180.9,,,,0.08,,Não Conforme,Conforme,Conforme,1,Fora do Padrão,Dentro do Padrão,Dentro do Padrão
+SAO LUIS,RIO ANIL,2017-09-04,16:50:00,-2.523975,-44.279067,NÃO,7.93,6.34,52.08,29.8,50032.0,,,,29.3,,Conforme,Conforme,Conforme,0,Dentro do Padrão,Dentro do Padrão,Dentro do Padrão
