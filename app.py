@@ -26,7 +26,7 @@ st.markdown("----")
 def carregar_dados():
     try: 
         df= pd.read_csv("data/processed/dados_tratados_tcc.csv")
-        df['data']=pd.to_datetime(df['data'], format='%Y-%m-%d')
+        df['data']=pd.to_datetime(df['data'], format="mixed", errors='coerce', dayfirst=True)
         return df   
     except FileNotFoundError:
         return None
@@ -39,10 +39,13 @@ if df_raw is None:
 
 # Filtros
 
+df_raw['ano_filtro'] = df_raw['data'].dt.year.astype(int)
+
+
 st.sidebar.header("Filtros de Análise")
 
 # Filtro do ano
-anos_disponiveis= sorted(df_raw['data'].dt.year.unique(), reverse = True)
+anos_disponiveis= sorted(df_raw['ano_filtro'].unique(), reverse = True)
 anos_selecionados= st.sidebar.multiselect("Selecione os anos:", anos_disponiveis, default= anos_disponiveis)
 
 # Filtro de rio
@@ -51,7 +54,7 @@ rios_selecionados = st.sidebar.multiselect("Selecione os rios:", rios_disponivei
 
 # Aplicação de filtros
 df_filtrado = df_raw[
-    (df_raw['data'].dt.year.isin(anos_selecionados)) &
+    (df_raw['ano_filtro'].isin(anos_selecionados)) &
     (df_raw['rio'].isin(rios_selecionados))
 ]
 
@@ -152,7 +155,7 @@ with tab1:
                     'Não Conforme': '#e74c3c'
                 }
                 
-                sns.barplot(x=contagem.index, y=contagem.values, ax=ax, palette=paleta_cores)
+                sns.barplot(x=contagem.index, y=contagem.values, ax=ax, palette=paleta_cores, hue = contagem.index)
                 ax.set_title(titulo)
                 ax.set_ylabel("Qtd. Amostras")
                 ax.set_xlabel("")
@@ -207,7 +210,7 @@ with tab2:
     # 3. Gerando o Gráfico
     if not df_filtrado.empty:
         # Agrupa por mês para suavizar o gráfico
-        df_temp = df_filtrado.set_index('data').resample('M')[coluna].mean().reset_index()
+        df_temp = df_filtrado.set_index('data').resample('ME')[coluna].mean().reset_index()
         
         fig2, ax = plt.subplots(figsize=(12, 5))
         
