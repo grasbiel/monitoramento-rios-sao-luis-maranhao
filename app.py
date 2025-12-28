@@ -5,6 +5,7 @@ from folium.plugins import MarkerCluster
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 st.set_page_config(
     page_title="Monitoramento Hídrico - São Luís-MA",
@@ -130,7 +131,11 @@ else:
 
 st.subheader("📊 Diagnóstico Visual")
 
-tab1, tab2 = st.tabs(["Conformidade por Parâmetro", "Evolução Temporal (OD)"])
+tab1, tab2, tab3 = st.tabs([
+    "Conformidade por Parâmetro", 
+    "Evolução Temporal (OD)",
+    "Estatística Científica"
+    ])
 
 with tab1:
     if not df_filtrado.empty:
@@ -179,71 +184,166 @@ with tab1:
 with tab2:
     st.markdown("Analise a tendência dos parâmetros ao longo do tempo.")
     
-    # 1. Seletor de Parâmetro
-    parametro = st.selectbox(
+    config_parametros = {
+        "Oxigênio Dissolvido (OD)": {
+            "col": "od", "cor": "blue", "limite": 5.0, "tipo_lim": "min", "ylabel": "mg/L"
+        },
+        "Turbidez": {
+            "col": "turbidez", "cor": "brown", "limite": 100.0, "tipo_lim": "max", "ylabel": "NTU"
+        },
+        "pH": {
+            "col": "ph", "cor": "green", "limite": [6.0, 9.0], "tipo_lim": "range", "ylabel": "pH"
+        },
+        "Temperatura": {
+            "col": "temperatura", "cor": "orange", "limite": None, "tipo_lim": "none", "ylabel": "°C"
+        },
+        "Salinidade": {
+            "col": "salinidade", "cor": "purple", "limite": None, "tipo_lim": "none", "ylabel": "ppt"
+        },
+        "Condutividade": {
+            "col": "condutividade", "cor": "teal", "limite": None, "tipo_lim": "none", "ylabel": "µS/cm"
+        },
+        "Sólidos Totais (STD)": {
+            "col": "std", "cor": "gray", "limite": 500.0, "tipo_lim": "max", "ylabel": "mg/L"
+        },
+        "Nitrogênio Total": {
+            "col": "nitrogenio", "cor": "magenta", "limite": 2.18, "tipo_lim": "max", "ylabel": "mg/L"
+        },
+        "Fósforo Total": {
+            "col": "fosforo", "cor": "red", "limite": 0.1, "tipo_lim": "max", "ylabel": "mg/L"
+        }
+    }
+    
+    # 2. Seletor de Parâmetro (Usa as chaves do dicionário)
+    parametro_selecionado = st.selectbox(
         "Selecione o Indicador para visualizar:",
-        ["Oxigênio Dissolvido (OD)", "Turbidez", "pH"]
+        list(config_parametros.keys())
     )
-
-    # 2. Configuração Dinâmica (O que muda para cada escolha)
-    if parametro == "Oxigênio Dissolvido (OD)":
-        coluna = 'od'
-        cor_linha = 'blue'
-        limite_val = 5.0
-        tipo_limite = 'min' # Deve ser MAIOR que isso
-        ylabel = 'Concentração (mg/L)'
     
-    elif parametro == "Turbidez":
-        coluna = 'turbidez'
-        cor_linha = 'brown'
-        limite_val = 100.0
-        tipo_limite = 'max' # Deve ser MENOR que isso
-        ylabel = 'Turbidez (NTU)'
+    # Recupera as configurações da escolha
+    cfg = config_parametros[parametro_selecionado]
+    coluna = cfg['col']
     
-    else: # pH
-        coluna = 'ph'
-        cor_linha = 'green'
-        limite_val = [6.0, 9.0] # Faixa
-        tipo_limite = 'range'
-        ylabel = 'pH'
-
-    # 3. Gerando o Gráfico
-    if not df_filtrado.empty:
-        # Agrupa por mês para suavizar o gráfico
+    # 3. Verificação e Plotagem
+    if not df_filtrado.empty and coluna in df_filtrado.columns:
+        
+        # Agrupa por mês para suavizar (Média Mensal)
+        # 'ME' é o alias novo do pandas para Month End (antigo 'M')
         df_temp = df_filtrado.set_index('data').resample('ME')[coluna].mean().reset_index()
-        
-        fig2, ax = plt.subplots(figsize=(12, 5))
-        
-        # Plota a linha de tendência
-        sns.lineplot(data=df_temp, x='data', y=coluna, marker='o', color=cor_linha, linewidth=2, label='Média Mensal')
-        
-        # Lógica das Linhas de Limite (CONAMA)
-        if tipo_limite == 'min':
-            plt.axhline(limite_val, color='red', linestyle='--', label=f'Mínimo ({limite_val})')
-            # Pinta a área ruim (abaixo da linha)
-            plt.fill_between(df_temp['data'], 0, limite_val, color='red', alpha=0.1)
-            
-        elif tipo_limite == 'max':
-            plt.axhline(limite_val, color='red', linestyle='--', label=f'Máximo ({limite_val})')
-            # Pinta a área ruim (acima da linha)
-            # Definindo um teto visual razoável para o fill_between
-            max_y = df_temp[coluna].max()
-            plt.fill_between(df_temp['data'], limite_val, max(max_y, limite_val)*1.2, color='red', alpha=0.1)
-            
-        elif tipo_limite == 'range':
-            plt.axhline(limite_val[0], color='red', linestyle='--', label='Min (6.0)')
-            plt.axhline(limite_val[1], color='red', linestyle='--', label='Max (9.0)')
-            # Pinta as áreas ruins
-            plt.fill_between(df_temp['data'], 0, limite_val[0], color='red', alpha=0.1)
-            plt.fill_between(df_temp['data'], limite_val[1], 14, color='red', alpha=0.1)
-            plt.ylim(4, 10) # Foco visual no pH
 
-        plt.title(f"Evolução Temporal: {parametro}")
-        plt.ylabel(ylabel)
-        plt.xlabel("Data")
-        plt.legend()
-        plt.grid(True, linestyle=':', alpha=0.6)
-        
-        st.pyplot(fig2)
+        # Verifica se há dados válidos após o resample
+        if df_temp[coluna].notna().sum() > 0:
+            
+            fig2, ax = plt.subplots(figsize=(12, 5))
+            
+            # Plota a linha de tendência
+            sns.lineplot(
+                data=df_temp, x='data', y=coluna, 
+                marker='o', color=cfg['cor'], linewidth=2, label='Média Mensal'
+            )
+
+            # --- Lógica das Linhas de Limite (CONAMA) ---
+            if cfg['tipo_lim'] == 'min':
+                lim = cfg['limite']
+                plt.axhline(lim, color='red', linestyle='--', label=f'Mínimo ({lim})')
+                plt.fill_between(df_temp['data'], 0, lim, color='red', alpha=0.1)
+
+            elif cfg['tipo_lim'] == 'max':
+                lim = cfg['limite']
+                plt.axhline(lim, color='red', linestyle='--', label=f'Máximo ({lim})')
+                # Teto visual dinâmico
+                max_y = df_temp[coluna].max()
+                teto = max(max_y, lim) * 1.2 if pd.notna(max_y) else lim * 1.2
+                plt.fill_between(df_temp['data'], lim, teto, color='red', alpha=0.1)
+
+            elif cfg['tipo_lim'] == 'range':
+                lim_min, lim_max = cfg['limite']
+                plt.axhline(lim_min, color='red', linestyle='--', label=f'Min ({lim_min})')
+                plt.axhline(lim_max, color='red', linestyle='--', label=f'Max ({lim_max})')
+                plt.fill_between(df_temp['data'], 0, lim_min, color='red', alpha=0.1)
+                
+                # Definindo teto para o gráfico de pH
+                plt.fill_between(df_temp['data'], lim_max, 14, color='red', alpha=0.1)
+                plt.ylim(4, 10) 
+
+            # Configurações Finais do Gráfico
+            plt.title(f"Evolução Temporal: {parametro_selecionado}")
+            plt.ylabel(cfg['ylabel'])
+            plt.xlabel("Data")
+            plt.legend()
+            plt.grid(True, linestyle=':', alpha=0.6)
+            
+            st.pyplot(fig2)
     else:
         st.warning("Sem dados suficientes para gerar o gráfico temporal com os filtros atuais.")
+
+with tab3:
+    st.markdown("### Análise de Correlação e Disponibilidade de Dados")
+    st.markdown("""
+                *Esta seção visa atender ao rigor científico, analisando a matriz de correção físico-químicos e identificando a consistência do monitoramento
+                """)
+    
+    if not df_filtrado.empty:
+        cols_analise = [
+            "ph", "od", "turbidez", "temperatura", "condutividade", "std","nitrogenio","salinidade","fosforo"
+        ]
+        
+        df_cientifico = df_filtrado[cols_analise].copy()
+        
+        df_cientifico = df_cientifico.replace(0.0, float('nan'))
+        
+        col_c1, col_c2 = st.columns([1,1])
+        
+        # Análise de dados faltantes
+        with col_c1:
+            st.markdown("Consistência do Monitoramento")
+            st.caption("Percentual de amostras com dados válidos (não nulos) no período selecionado")
+            
+            # Cálculo de porcentagem de preenchimento
+            total = len(df_cientifico)
+            preenchimento = (df_cientifico.count() / total) * 100
+            df_missing = pd.DataFrame(preenchimento, columns=['% Preenchimento']).sort_values('% Preenchimento', ascending=True)
+            
+            fig_miss, ax_miss = plt.subplots(figsize=(6,6))
+            sns.barplot(x=df_missing['% Preenchimento'], y= df_missing.index, ax= ax_miss, palette="viridis", hue=df_missing.index)
+            ax_miss.set_xlabel("% de Dados Disponíveis")
+            ax_miss.set_xlim(0,100)
+            ax_miss.grid(axis="x", linestyle="--", alpha=0.5)
+            
+            for i, v in enumerate(df_missing["% Preenchimento"]):
+                ax_miss.text(v + 1, i, f"{v:.1f}", va="center", fontsize=9)
+            
+            st.pyplot(fig_miss)
+            
+        # Matriz de Correlação (Pearson)            
+        with col_c2:
+            st.markdown("Matriz de Correlação (Pearson)")
+            st.caption("Indica como as variáevis interagem. (1= Correlação Positiva Perfeita, -1 = Negativa Perfeita)")
+            
+            corr = df_cientifico.corr()
+            
+            fig_corr, ax_corr = plt.subplots(figsize=(8,8))
+            mask = np.triu(np.ones_like(corr, dtype=bool))
+            
+            sns.heatmap(corr, mask=mask, cmap="coolwarm", vmin=1, vmax=1, center=0,
+                        annot=True, fmt=".2f", square=True, linewidths=.5, cbar_kws={"shrink": .5})
+            
+            plt.xticks(rotation=45, ha="right")
+            st.pyplot(fig_corr)
+            
+        
+        # Insights
+        st.divider()
+        st.markdown("**💡 Insights Automáticos (Baseado nos dados filtrados):**")
+        
+        cor_od_turb = corr.loc['temperatura', 'ph']
+        texto_corr = "fraca"
+        if abs(cor_od_turb) > 0.5: texto_corr = "moderada"
+        if abs(cor_od_turb) > 0.7: texto_corr = "forte"
+        tipo_corr = "negativa (inversa)" if cor_od_turb < 0 else "positiva (direta)"
+        
+        st.write(f"A correlação entre **OD e Turbidez** é **{texto_corr} e {tipo_corr}** ({cor_od_turb:.2f}).")
+    
+    else:
+        st.warning("Sem dados suficientes para análise estatística")
+        
