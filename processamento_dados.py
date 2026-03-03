@@ -5,9 +5,7 @@ import os
 import unicodedata
 from sklearn.neighbors import KNeighborsClassifier
 
-# ==============================================================================
 # 1. CONFIGURAÇÕES
-# ==============================================================================
 CAMINHO_ENTRADA = "data/raw/dados_brutos.xlsx"
 CAMINHO_SAIDA = "data/processed/dados_tratados_tcc.csv"
 
@@ -20,10 +18,8 @@ CHECK_LON_MIN, CHECK_LON_MAX = -46.0, -42.0
 FINAL_LAT_MIN, FINAL_LAT_MAX = -2.80, -2.30
 FINAL_LON_MIN, FINAL_LON_MAX = -44.50, -44.00
 
-# ==============================================================================
-# 2. FUNÇÕES INTELIGENTES
-# ==============================================================================
 
+# 2. FUNÇÕES INTELIGENTES
 def padronizar_texto(texto):
     """Remove acentos, espaços e joga pra maiúsculo."""
     if pd.isna(texto): return texto
@@ -78,12 +74,9 @@ def classificar_conama(row):
     
     return len(problemas), ", ".join(problemas)
 
-# ==============================================================================
 # 3. PIPELINE DE EXECUÇÃO
-# ==============================================================================
-
 def executar_etl():
-    print("--- INICIANDO PROCESSAMENTO (MODO CORREÇÃO) ---")
+    print("INICIANDO PROCESSAMENTO")
 
     # A. Carregar
     if not os.path.exists(CAMINHO_ENTRADA):
@@ -91,13 +84,13 @@ def executar_etl():
         return
     df_bruto = pd.read_excel(CAMINHO_ENTRADA)
 
-    # B. Renomear (VOLTAMOS AO MAPEAMENTO ORIGINAL DO COLAB)
+    # B. Renomear
     mapa_colunas = {
         "Nome Municipio": "municipio",
         "Nome do Corpo D'Água": "rio",
         "Data da Coleta (dd/mm/aaaa)": "data",
-        "Posição horizontal da coleta (latitude)": "latitude",  # Voltei ao original
-        "Posição vertical da coleta (longitude)": "longitude", # Voltei ao original
+        "Posição horizontal da coleta (latitude)": "latitude", 
+        "Posição vertical da coleta (longitude)": "longitude", 
         # Variáveis
         "pH": "ph", "Oxigênio dissolvido (mg/L 02)": "od", "Turbidez (NTU)": "turbidez",
         "Temperatura da água (°C)": "temperatura",
@@ -122,11 +115,11 @@ def executar_etl():
     # Filtro Municipio
     df = df[df['municipio'] == 'SAO LUIS'].copy()
     if df.empty:
-        print("🚨 ERRO CRÍTICO: Filtro 'SAO LUIS' removeu tudo. Verifique o nome no Excel.")
+        print("ERRO CRÍTICO: Filtro 'SAO LUIS' removeu tudo. Verifique o nome no Excel.")
         return
 
-    # E. Limpeza de Coordenadas (COM DEBUG)
-    print("\n--- AMOSTRA DE COORDENADAS ANTES DA LIMPEZA ---")
+    # E. Limpeza de Coordenadas 
+    print("\n AMOSTRA DE COORDENADAS ANTES DA LIMPEZA")
     print(df[['latitude', 'longitude']].head(3).to_string())
 
     df['latitude'] = df['latitude'].apply(lambda x: limpar_coordenada_inteligente(x, 'lat'))
@@ -147,8 +140,8 @@ def executar_etl():
     
     print(f"Registros válidos após Geofencing: {len(df_geo)} (de {len(df)} originais)")
 
-    # G. KNN Rios (Mantido)
-    print("Processando nomes de rios...")
+    # G. KNN Rios
+    print("Processando nomes de rios")
     df_treino = df_geo.dropna(subset=['rio']).copy()
     mask_nulos = df_geo['rio'].isna() | (df_geo['rio'] == '')
     

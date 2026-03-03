@@ -116,7 +116,7 @@ def exibir_estatisticas_amostragem(df):
 # ==============================================================================
 
 
-# --- Filtros ---
+# Filtros 
 df_raw['ano_filtro'] = df_raw['data'].dt.year.astype(int)
 
 st.sidebar.header("Filtros de Análise")
@@ -135,7 +135,7 @@ df_filtrado = df_raw[
     (df_raw['rio'].isin(rios_selecionados))
 ]
 
-# --- Indicadores principais (KPIs) ---
+# Indicadores principais (KPIs)
 col1, col2, col3, col4 = st.columns(4)
 
 total_amostras = len(df_filtrado)
@@ -154,7 +154,7 @@ if total_amostras > 0:
         rio_critico_nome = "Nenhum"
         
     mapa_colunas_status = {
-        'stadus_od': 'Oxigênio Dissolvido',
+        'status_od': 'Oxigênio Dissolvido',
         'status_turbidez': 'Turbidez',
         'status_ph': 'pH'
     }
