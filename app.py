@@ -116,8 +116,9 @@ def exibir_estatisticas_amostragem(df):
 # ==============================================================================
 
 
-# Filtros 
+# Filtros
 df_raw['ano_filtro'] = df_raw['data'].dt.year.astype(int)
+df_raw['mes_filtro'] = df_raw['data'].dt.month.astype(int)
 
 st.sidebar.header("Filtros de Análise")
 
@@ -125,13 +126,40 @@ st.sidebar.header("Filtros de Análise")
 anos_disponiveis = sorted(df_raw['ano_filtro'].unique(), reverse=True)
 anos_selecionados = st.sidebar.multiselect("Selecione os anos:", anos_disponiveis, default=anos_disponiveis)
 
+# Filtro do mês
+MESES_NOMES = {
+    1: "Jan", 2: "Fev", 3: "Mar", 4: "Abr", 5: "Mai", 6: "Jun",
+    7: "Jul", 8: "Ago", 9: "Set", 10: "Out", 11: "Nov", 12: "Dez"
+}
+meses_disponiveis = sorted(df_raw['mes_filtro'].unique())
+meses_selecionados = st.sidebar.multiselect(
+    "Selecione os meses:",
+    options=meses_disponiveis,
+    default=meses_disponiveis,
+    format_func=lambda m: MESES_NOMES.get(m, str(m))
+)
+
 # Filtro de rio
 rios_disponiveis = sorted(df_raw['rio'].unique())
 rios_selecionados = st.sidebar.multiselect("Selecione os rios:", rios_disponiveis, default=rios_disponiveis)
 
+# Filtro por parâmetro (foco de análise) — usado nas abas de Ranking e Boxplot
+PARAMETROS_CONAMA = {
+    "Todos os parâmetros": {"col": None, "limite": None, "tipo_lim": None},
+    "pH": {"col": "ph", "limite": [6.0, 9.0], "tipo_lim": "range", "status": "status_ph"},
+    "Oxigênio Dissolvido (OD)": {"col": "od", "limite": 5.0, "tipo_lim": "min", "status": "status_od"},
+    "Turbidez": {"col": "turbidez", "limite": 100.0, "tipo_lim": "max", "status": "status_turbidez"},
+}
+parametro_foco = st.sidebar.selectbox(
+    "Parâmetro em foco:",
+    list(PARAMETROS_CONAMA.keys()),
+    help="Define o parâmetro destacado nas análises de Ranking e Boxplot."
+)
+
 # Aplicação de filtros
 df_filtrado = df_raw[
     (df_raw['ano_filtro'].isin(anos_selecionados)) &
+    (df_raw['mes_filtro'].isin(meses_selecionados)) &
     (df_raw['rio'].isin(rios_selecionados))
 ]
 
@@ -248,10 +276,12 @@ else:
 # Abas de Diagnóstico
 st.subheader("📊 Diagnóstico Visual")
 
-tab1, tab2, tab3 = st.tabs([
-    "Conformidade por Parâmetro", 
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "Conformidade por Parâmetro",
     "Evolução Temporal (OD)",
-    "Estatística Científica"
+    "Estatística Científica",
+    "Ranking de Pontos Críticos",
+    "Distribuição por Rio (Boxplot)"
     ])
 
 with tab1:
@@ -273,11 +303,14 @@ with tab1:
                     'Fora do Padrão': '#e74c3c',   # Vermelho
                     'Conforme': '#2ecc71',
                     'Não Conforme': '#e74c3c',
+                    'OK': '#2ecc71',
+                    'Fora': '#e74c3c',
                     'Sem Dado': '#95a5a6',         # Cinza
                     'Sem dado': '#95a5a6'          # Cinza
                 }
-                
-                sns.barplot(x=contagem.index, y=contagem.values, ax=ax, palette=paleta_cores, hue=contagem.index)
+                cores_aplicadas = {k: paleta_cores.get(k, '#95a5a6') for k in contagem.index}
+
+                sns.barplot(x=contagem.index, y=contagem.values, ax=ax, palette=cores_aplicadas, hue=contagem.index)
                 ax.set_title(titulo)
                 ax.set_ylabel("Qtd. Amostras")
                 ax.set_xlabel("")
@@ -441,3 +474,140 @@ with tab3:
     
     else:
         st.warning("Sem dados suficientes para análise estatística")
+
+
+with tab4:
+    st.markdown("### Ranking de Pontos Críticos")
+    st.caption("Pontos de coleta com maior frequência de não-conformidades segundo CONAMA 357/2005.")
+
+    if df_filtrado.empty:
+        st.warning("Sem dados para os filtros atuais.")
+    else:
+        cfg_foco = PARAMETROS_CONAMA[parametro_foco]
+        df_rank = df_filtrado.copy()
+
+        # Define a métrica de "falha" conforme o parâmetro em foco
+        if cfg_foco["col"] is None:
+            df_rank['_falha'] = (df_rank['indice_problemas'] > 0).astype(int)
+            rotulo_metric = "Não-conformidades (qualquer parâmetro)"
+        else:
+            col_status = cfg_foco.get("status")
+            if col_status and col_status in df_rank.columns:
+                df_rank['_falha'] = df_rank[col_status].isin(
+                    ['Fora do Padrão', 'Não Conforme', 'Fora']
+                ).astype(int)
+            else:
+                df_rank['_falha'] = 0
+            rotulo_metric = f"Não-conformidades de {parametro_foco}"
+
+        # Agrupamento por rio + ponto (lat/lon arredondado p/ agrupar coletas próximas)
+        df_rank['lat_r'] = df_rank['latitude'].round(4)
+        df_rank['lon_r'] = df_rank['longitude'].round(4)
+
+        ranking = df_rank.groupby(['rio', 'lat_r', 'lon_r']).agg(
+            Amostras=('_falha', 'size'),
+            Falhas=('_falha', 'sum')
+        ).reset_index()
+        ranking['Taxa_Falha_%'] = (ranking['Falhas'] / ranking['Amostras'] * 100).round(1)
+        ranking = ranking.sort_values(['Falhas', 'Taxa_Falha_%'], ascending=False)
+
+        top_n = st.slider("Mostrar top N pontos:", 5, 30, 10)
+        ranking_top = ranking.head(top_n)
+
+        col_r1, col_r2 = st.columns([1.2, 1])
+        with col_r1:
+            st.markdown(f"**{rotulo_metric}**")
+            fig_rank = px.bar(
+                ranking_top.sort_values('Falhas'),
+                x='Falhas', y='rio', orientation='h',
+                color='Taxa_Falha_%', color_continuous_scale='Reds',
+                text='Falhas',
+                hover_data={'lat_r': True, 'lon_r': True, 'Amostras': True, 'Taxa_Falha_%': True}
+            )
+            fig_rank.update_layout(height=400, margin=dict(l=0, r=0, t=10, b=0),
+                                    xaxis_title="Nº de não-conformidades", yaxis_title=None)
+            st.plotly_chart(fig_rank, width="stretch")
+
+        with col_r2:
+            st.markdown("**Detalhamento dos Pontos**")
+            st.dataframe(
+                ranking_top.rename(columns={
+                    'rio': 'Rio', 'lat_r': 'Latitude', 'lon_r': 'Longitude'
+                }),
+                column_config={
+                    "Taxa_Falha_%": st.column_config.ProgressColumn(
+                        "Taxa Falha", format="%.1f%%", min_value=0, max_value=100
+                    ),
+                    "Amostras": st.column_config.NumberColumn("Amostras", format="%d"),
+                    "Falhas": st.column_config.NumberColumn("Falhas", format="%d"),
+                },
+                hide_index=True,
+                width="stretch"
+            )
+
+
+with tab5:
+    st.markdown("### Distribuição dos Parâmetros por Rio")
+    st.caption("Boxplot revela mediana, dispersão e outliers. Linhas tracejadas marcam o limite CONAMA 357/2005.")
+
+    if df_filtrado.empty:
+        st.warning("Sem dados para os filtros atuais.")
+    else:
+        cfg_foco = PARAMETROS_CONAMA[parametro_foco]
+
+        # Se "Todos", deixa o usuário escolher um parâmetro para o boxplot
+        if cfg_foco["col"] is None:
+            opcoes_box = {k: v for k, v in PARAMETROS_CONAMA.items() if v["col"] is not None}
+            escolha_box = st.selectbox("Escolha o parâmetro:", list(opcoes_box.keys()))
+            cfg_box = opcoes_box[escolha_box]
+            titulo_box = escolha_box
+        else:
+            cfg_box = cfg_foco
+            titulo_box = parametro_foco
+
+        col_alvo = cfg_box["col"]
+        if col_alvo not in df_filtrado.columns:
+            st.warning(f"Coluna '{col_alvo}' indisponível no dataset.")
+        else:
+            df_box = df_filtrado[['rio', col_alvo]].copy()
+            df_box[col_alvo] = pd.to_numeric(df_box[col_alvo], errors='coerce')
+            # 0 é placeholder para "sem dado" no ETL — remove para o boxplot
+            df_box = df_box[df_box[col_alvo] > 0].dropna()
+
+            if df_box.empty:
+                st.info("Sem amostras válidas para o parâmetro selecionado.")
+            else:
+                ordem_rios = sorted(df_box['rio'].unique())
+                fig_box = px.box(
+                    df_box, x='rio', y=col_alvo,
+                    points='outliers', color='rio',
+                    category_orders={'rio': ordem_rios}
+                )
+
+                # Linhas de limite CONAMA
+                if cfg_box["tipo_lim"] == "min":
+                    fig_box.add_hline(y=cfg_box["limite"], line_dash="dash", line_color="red",
+                                      annotation_text=f"Mín CONAMA ({cfg_box['limite']})")
+                elif cfg_box["tipo_lim"] == "max":
+                    fig_box.add_hline(y=cfg_box["limite"], line_dash="dash", line_color="red",
+                                      annotation_text=f"Máx CONAMA ({cfg_box['limite']})")
+                elif cfg_box["tipo_lim"] == "range":
+                    fig_box.add_hline(y=cfg_box["limite"][0], line_dash="dash", line_color="red",
+                                      annotation_text=f"Mín ({cfg_box['limite'][0]})")
+                    fig_box.add_hline(y=cfg_box["limite"][1], line_dash="dash", line_color="red",
+                                      annotation_text=f"Máx ({cfg_box['limite'][1]})")
+
+                fig_box.update_layout(
+                    height=500, showlegend=False,
+                    xaxis_title=None, yaxis_title=titulo_box,
+                    title=f"Distribuição de {titulo_box} por Rio"
+                )
+                fig_box.update_xaxes(tickangle=-30)
+                st.plotly_chart(fig_box, width="stretch")
+
+                # Resumo estatístico
+                st.markdown("**Resumo estatístico por rio**")
+                resumo = df_box.groupby('rio')[col_alvo].describe()[
+                    ['count', 'mean', '50%', 'std', 'min', 'max']
+                ].rename(columns={'50%': 'mediana', 'count': 'n'}).round(2)
+                st.dataframe(resumo, width="stretch")

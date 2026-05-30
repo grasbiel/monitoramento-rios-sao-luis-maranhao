@@ -93,9 +93,9 @@ def executar_etl():
         "Posição vertical da coleta (longitude)": "longitude", 
         # Variáveis
         "pH": "ph", "Oxigênio dissolvido (mg/L 02)": "od", "Turbidez (NTU)": "turbidez",
-        "Temperatura da água (°C)": "temperatura",
+        "Temperatura da água (°C)": "temperatura_agua",
         "Condutividade Elétrica Específica (25°C) (µS/cm a 25°C)": "condutividade",
-        "Sólidos Dissolvidos (mg/L)": "std",
+        "Sólidos Dissolvidos (mg/L)": "solidos_dissolvidos",
         "Fósforo Total\n (mg/L de P)": "fosforo",
         "Nitrogênio Amoniacal\n (mg/L de N)": "nitrogenio",
         "Salinidade (‰)": "salinidade"
@@ -151,7 +151,8 @@ def executar_etl():
         df_geo.loc[mask_nulos, 'rio'] = knn.predict(df_geo.loc[mask_nulos, ['latitude', 'longitude']].values)
 
     # H. Tratamento Numérico (Zerando vazios)
-    cols_num = ['ph', 'od', 'turbidez', 'temperatura', 'condutividade', 'fosforo']
+    cols_num = ['ph', 'od', 'turbidez', 'temperatura_agua', 'condutividade',
+                'solidos_dissolvidos', 'fosforo', 'nitrogenio', 'salinidade']
     for col in cols_num:
         if col in df_geo.columns:
             df_geo[col] = pd.to_numeric(df_geo[col], errors='coerce').fillna(0.0)
@@ -162,9 +163,15 @@ def executar_etl():
     df_geo['lista_problemas'] = classificacao[1]
     df_geo['resultado_final'] = df_geo['indice_problemas'].apply(lambda x: 'Aprovado' if x == 0 else 'Reprovado')
 
-    # Status individuais
-    df_geo['status_ph'] = df_geo['ph'].apply(lambda x: 'Fora' if (x>0 and not 6<=x<=9) else 'OK')
-    df_geo['status_od'] = df_geo['od'].apply(lambda x: 'Fora' if (x!=0 and x<5) else 'OK')
+    # Status individuais (rótulos alinhados ao dashboard)
+    def _status(valor, ok_func):
+        if valor == 0:
+            return 'Sem Dado'
+        return 'Dentro do Padrão' if ok_func(valor) else 'Fora do Padrão'
+
+    df_geo['status_ph'] = df_geo['ph'].apply(lambda x: _status(x, lambda v: 6.0 <= v <= 9.0))
+    df_geo['status_od'] = df_geo['od'].apply(lambda x: _status(x, lambda v: v >= 5.0))
+    df_geo['status_turbidez'] = df_geo['turbidez'].apply(lambda x: _status(x, lambda v: v <= 100.0))
     
     # Salvar
     os.makedirs(os.path.dirname(CAMINHO_SAIDA), exist_ok=True)
