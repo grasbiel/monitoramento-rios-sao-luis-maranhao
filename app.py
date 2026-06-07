@@ -285,49 +285,130 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     ])
 
 with tab1:
-    if not df_filtrado.empty:
-        col_g1, col_g2, col_g3 = st.columns(3)
-        
-        def plotar_barra(coluna_status, titulo, local_plot):
-            if coluna_status in df_filtrado.columns:
-                fig, ax = plt.subplots(figsize=(5,4))
-                
-                # Preenche vazios com 'Sem Dado' para evitar erro
-                series_plot = df_filtrado[coluna_status].fillna('Sem Dado')
-                contagem = series_plot.value_counts()
-                
-                
-                
-                paleta_cores = {
-                    'Dentro do Padrão': '#2ecc71', # Verde
-                    'Fora do Padrão': '#e74c3c',   # Vermelho
-                    'Conforme': '#2ecc71',
-                    'Não Conforme': '#e74c3c',
-                    'OK': '#2ecc71',
-                    'Fora': '#e74c3c',
-                    'Sem Dado': '#95a5a6',         # Cinza
-                    'Sem dado': '#95a5a6'          # Cinza
-                }
-                cores_aplicadas = {k: paleta_cores.get(k, '#95a5a6') for k in contagem.index}
+    st.markdown("### Conformidade comparada — CONAMA 357/2005")
 
-                sns.barplot(x=contagem.index, y=contagem.values, ax=ax, palette=cores_aplicadas, hue=contagem.index)
-                ax.set_title(titulo)
-                ax.set_ylabel("Qtd. Amostras")
-                ax.set_xlabel("")
-                
-                for p in ax.patches:
-                    if p.get_height() > 0:
-                        ax.annotate(f'{int(p.get_height())}', 
-                                    (p.get_x() + p.get_width() / 2., p.get_height()), 
-                                    ha='center', va='bottom')
-                                    
-                local_plot.pyplot(fig)
+    if df_filtrado.empty:
+        st.warning("Sem dados para os filtros atuais.")
+    else:
+        # Rótulos considerados como violação / conformidade / sem dado
+        ROTULOS_FORA = {'Fora do Padrão', 'Não Conforme', 'Fora', 'Ruim', 'Péssimo'}
+        ROTULOS_OK   = {'Dentro do Padrão', 'Conforme', 'OK', 'Bom', 'Ótimo'}
+        ROTULOS_SEM  = {'Sem Dado', 'Sem dado', ''}
+
+        def classificar_rotulo(v):
+            if pd.isna(v) or v in ROTULOS_SEM:
+                return 'Sem Dado'
+            if v in ROTULOS_FORA:
+                return 'Fora do Padrão'
+            if v in ROTULOS_OK:
+                return 'Dentro do Padrão'
+            return 'Sem Dado'
+
+        parametros_conf = [
+            ('status_ph', 'pH'),
+            ('status_od', 'Oxigênio Dissolvido'),
+            ('status_turbidez', 'Turbidez'),
+        ]
+
+        linhas = []
+        for col_status, nome in parametros_conf:
+            if col_status not in df_filtrado.columns:
+                continue
+            serie = df_filtrado[col_status].apply(classificar_rotulo)
+            cont = serie.value_counts()
+            total_valido = int(cont.get('Dentro do Padrão', 0) + cont.get('Fora do Padrão', 0))
+            total_amostras = int(serie.size)
+            pct_fora = (cont.get('Fora do Padrão', 0) / total_valido * 100) if total_valido else 0.0
+            linhas.append({
+                'Parâmetro': nome,
+                'Dentro do Padrão': int(cont.get('Dentro do Padrão', 0)),
+                'Fora do Padrão':   int(cont.get('Fora do Padrão', 0)),
+                'Sem Dado':         int(cont.get('Sem Dado', 0)),
+                'Total Válido':     total_valido,
+                'Total Amostras':   total_amostras,
+                '% Fora':           pct_fora,
+            })
+
+        if not linhas:
+            st.info("Nenhum status de conformidade disponível no dataset filtrado.")
+        else:
+            df_conf = pd.DataFrame(linhas)
+            # Storytelling: ordena do pior para o melhor (maior % de violação no topo)
+            df_conf = df_conf.sort_values('% Fora', ascending=True).reset_index(drop=True)
+
+            # Identifica vilão para subtítulo dinâmico
+            vilao = df_conf.sort_values('% Fora', ascending=False).iloc[0]
+            if vilao['% Fora'] > 0:
+                st.markdown(
+                    f"<div style='font-size:1.05rem; color:#e74c3c;'>"
+                    f"<b>{vilao['Parâmetro']}</b> é o parâmetro mais crítico: "
+                    f"<b>{vilao['% Fora']:.1f}%</b> das amostras válidas estão fora do padrão CONAMA."
+                    f"</div>",
+                    unsafe_allow_html=True
+                )
             else:
-                local_plot.info(f"Dados de {titulo} indisponíveis para este gráfico.")
-        
-        with col_g1: plotar_barra('status_ph', 'pH', st)
-        with col_g2: plotar_barra('status_od', 'Oxigênio (OD)', st)
-        with col_g3: plotar_barra('status_turbidez', 'Turbidez', st)
+                st.success("Todas as amostras válidas estão dentro do padrão CONAMA 🎉")
+
+            # Monta gráfico de barras empilhadas horizontais (% normalizado)
+            df_plot_rows = []
+            for _, r in df_conf.iterrows():
+                tv = r['Total Válido'] if r['Total Válido'] else 1
+                df_plot_rows.append({'Parâmetro': r['Parâmetro'], 'Status': 'Dentro do Padrão',
+                                     'Qtd': r['Dentro do Padrão'],
+                                     'Pct': r['Dentro do Padrão'] / tv * 100})
+                df_plot_rows.append({'Parâmetro': r['Parâmetro'], 'Status': 'Fora do Padrão',
+                                     'Qtd': r['Fora do Padrão'],
+                                     'Pct': r['Fora do Padrão'] / tv * 100})
+            df_plot = pd.DataFrame(df_plot_rows)
+
+            fig_conf = px.bar(
+                df_plot,
+                x='Pct', y='Parâmetro',
+                color='Status',
+                orientation='h',
+                color_discrete_map={'Dentro do Padrão': '#2ecc71', 'Fora do Padrão': '#e74c3c'},
+                custom_data=['Qtd', 'Status'],
+                category_orders={'Parâmetro': df_conf['Parâmetro'].tolist()}
+            )
+            # Anotação % no segmento vermelho (foco narrativo)
+            for _, r in df_conf.iterrows():
+                tv = r['Total Válido'] if r['Total Válido'] else 1
+                pct_fora = r['Fora do Padrão'] / tv * 100
+                if pct_fora > 0:
+                    fig_conf.add_annotation(
+                        x=100 - pct_fora / 2, y=r['Parâmetro'],
+                        text=f"<b>{pct_fora:.0f}% fora</b>",
+                        showarrow=False, font=dict(color='white', size=13)
+                    )
+            fig_conf.update_traces(
+                hovertemplate="<b>%{y}</b><br>%{customdata[1]}: %{customdata[0]} amostras (%{x:.1f}%)<extra></extra>"
+            )
+            fig_conf.update_layout(
+                barmode='stack',
+                height=320,
+                margin=dict(l=10, r=10, t=10, b=10),
+                xaxis=dict(title='% das amostras válidas', range=[0, 100], ticksuffix='%'),
+                yaxis_title=None,
+                legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
+                plot_bgcolor='rgba(0,0,0,0)'
+            )
+            st.plotly_chart(fig_conf, width="stretch")
+
+            # Tabela de apoio
+            with st.expander("Ver números absolutos"):
+                tabela = df_conf[['Parâmetro', 'Dentro do Padrão', 'Fora do Padrão',
+                                   'Sem Dado', 'Total Amostras', '% Fora']].copy()
+                tabela['% Fora'] = tabela['% Fora'].round(1)
+                st.dataframe(
+                    tabela,
+                    column_config={
+                        '% Fora': st.column_config.ProgressColumn(
+                            '% Fora', format='%.1f%%', min_value=0, max_value=100
+                        )
+                    },
+                    hide_index=True,
+                    width="stretch"
+                )
 
 
 with tab2:
@@ -374,56 +455,159 @@ with tab2:
 
     if coluna_alvo in df_filtrado.columns:
         mapa_freq = {"Mensal": "ME", "Trimestral": "QE", "Anual": "YE"}
-        
-        df_proc = df_filtrado.copy()
+        janela_mm = {"Mensal": 6, "Trimestral": 4, "Anual": 3}[frequencia]
+
+        df_proc = df_filtrado[['data', coluna_alvo]].copy()
         df_proc['data'] = pd.to_datetime(df_proc['data'])
         df_proc[coluna_alvo] = pd.to_numeric(df_proc[coluna_alvo], errors='coerce')
+        # 0 = placeholder de "sem dado" no ETL — remove para não puxar a média
+        df_proc = df_proc[df_proc[coluna_alvo] > 0].dropna()
 
-        df_temp = df_proc.set_index('data').resample(mapa_freq[frequencia])[coluna_alvo].mean().reset_index()
-        
-        if df_temp[coluna_alvo].notna().sum() > 0:
-            
-            fig2, ax = plt.subplots(figsize=(10, 4)) 
-            mark = 's' if frequencia == 'Anual' else 'o'
-            
-            sns.lineplot(
-                data=df_temp, x='data', y=coluna_alvo,
-                marker=mark, markersize=7,
-                color=cfg['cor'], linewidth=2, label=f'Média {frequencia}'
-            )
+        df_temp = (
+            df_proc.set_index('data')
+                   .resample(mapa_freq[frequencia])[coluna_alvo]
+                   .mean()
+                   .reset_index()
+                   .dropna()
+        )
 
+        if not df_temp.empty:
+            df_temp['mm'] = df_temp[coluna_alvo].rolling(window=janela_mm, min_periods=1).mean()
+
+            # Classifica cada ponto como conforme x não-conforme p/ destacar violações
             lim = cfg['limite']
+            def viola(v):
+                if cfg['tipo_lim'] == 'min':
+                    return v < lim
+                if cfg['tipo_lim'] == 'max':
+                    return v > lim
+                if cfg['tipo_lim'] == 'range':
+                    return (v < lim[0]) or (v > lim[1])
+                return False
+
+            df_temp['violou'] = df_temp[coluna_alvo].apply(viola) if cfg['tipo_lim'] != 'none' else False
+
+            import plotly.graph_objects as go
+            fig_t = go.Figure()
+
+            # Camada 1: faixa crítica CONAMA (vermelho translúcido)
+            x_full = df_temp['data']
+            y_min = float(df_temp[coluna_alvo].min())
+            y_max = float(df_temp[coluna_alvo].max())
+            y_pad = (y_max - y_min) * 0.1 if y_max > y_min else 1.0
+
             if cfg['tipo_lim'] == 'min':
-                plt.axhline(lim, color='red', linestyle='--', alpha=0.7)
-                plt.fill_between(df_temp['data'], 0, lim, color='red', alpha=0.1)
+                fig_t.add_hrect(y0=y_min - y_pad, y1=lim, fillcolor='red',
+                                opacity=0.08, line_width=0, layer='below',
+                                annotation_text=f"Zona crítica (< {lim})",
+                                annotation_position="bottom left",
+                                annotation_font_color="#c0392b")
+                fig_t.add_hline(y=lim, line_dash='dash', line_color='red', opacity=0.6)
             elif cfg['tipo_lim'] == 'max':
-                plt.axhline(lim, color='red', linestyle='--', alpha=0.7)
-                max_y = df_temp[coluna_alvo].max()
-                teto = max(max_y, lim) * 1.2 if pd.notna(max_y) else lim * 1.2
-                plt.fill_between(df_temp['data'], lim, teto, color='red', alpha=0.1)
+                fig_t.add_hrect(y0=lim, y1=y_max + y_pad, fillcolor='red',
+                                opacity=0.08, line_width=0, layer='below',
+                                annotation_text=f"Zona crítica (> {lim})",
+                                annotation_position="top left",
+                                annotation_font_color="#c0392b")
+                fig_t.add_hline(y=lim, line_dash='dash', line_color='red', opacity=0.6)
             elif cfg['tipo_lim'] == 'range':
-                plt.axhline(lim[0], color='red', linestyle='--')
-                plt.axhline(lim[1], color='red', linestyle='--')
-                plt.fill_between(df_temp['data'], 0, lim[0], color='red', alpha=0.1)
-                plt.fill_between(df_temp['data'], lim[1], 14, color='red', alpha=0.1)
-                plt.ylim(4, 10)
+                fig_t.add_hrect(y0=y_min - y_pad, y1=lim[0], fillcolor='red',
+                                opacity=0.08, line_width=0, layer='below')
+                fig_t.add_hrect(y0=lim[1], y1=y_max + y_pad, fillcolor='red',
+                                opacity=0.08, line_width=0, layer='below')
+                fig_t.add_hline(y=lim[0], line_dash='dash', line_color='red', opacity=0.6)
+                fig_t.add_hline(y=lim[1], line_dash='dash', line_color='red', opacity=0.6)
 
-            if frequencia == "Anual":
-                ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-                ax.xaxis.set_major_locator(mdates.YearLocator())
-                plt.xticks(rotation=0)
-            else:
-                ax.xaxis.set_major_formatter(mdates.DateFormatter('%b/%y'))
-                plt.xticks(rotation=45)
+            # Camada 2: pontos brutos translúcidos (mostra o ruído)
+            fig_t.add_trace(go.Scatter(
+                x=df_temp['data'], y=df_temp[coluna_alvo],
+                mode='lines+markers',
+                name=f'Média {frequencia.lower()}',
+                line=dict(color=cfg['cor'], width=1),
+                marker=dict(size=6, color=cfg['cor'], opacity=0.45),
+                opacity=0.55,
+                hovertemplate="%{x|%b/%Y}<br>"+cfg['ylabel']+": %{y:.2f}<extra></extra>"
+            ))
 
-            plt.title(f"{parametro_selecionado} - Visão {frequencia}", fontsize=12)
-            plt.ylabel(cfg['ylabel'], fontsize=10)
-            plt.xlabel("")
-            plt.grid(True, linestyle=':', alpha=0.5)
-            plt.legend(frameon=True, loc='best')
-            plt.tight_layout()
-            
-            st.pyplot(fig2)
+            # Camada 3: média móvel (a tendência narrativa)
+            fig_t.add_trace(go.Scatter(
+                x=df_temp['data'], y=df_temp['mm'],
+                mode='lines',
+                name=f'Tendência (MM {janela_mm}p)',
+                line=dict(color=cfg['cor'], width=3.5),
+                hovertemplate="%{x|%b/%Y}<br>Tendência: %{y:.2f}<extra></extra>"
+            ))
+
+            # Camada 4: pontos vermelhos destacando violações CONAMA
+            df_viol = df_temp[df_temp['violou']]
+            if not df_viol.empty:
+                fig_t.add_trace(go.Scatter(
+                    x=df_viol['data'], y=df_viol[coluna_alvo],
+                    mode='markers',
+                    name='Não conforme',
+                    marker=dict(size=11, color='#e74c3c',
+                                line=dict(color='white', width=1.5),
+                                symbol='circle'),
+                    hovertemplate="<b>Não conforme</b><br>%{x|%b/%Y}<br>"+cfg['ylabel']+": %{y:.2f}<extra></extra>"
+                ))
+
+            # Anotação automática no ponto mais crítico
+            if cfg['tipo_lim'] in ('min', 'max', 'range') and not df_viol.empty:
+                if cfg['tipo_lim'] == 'min':
+                    pior = df_viol.loc[df_viol[coluna_alvo].idxmin()]
+                    texto_pior = f"Mínima histórica: {pior[coluna_alvo]:.2f}"
+                elif cfg['tipo_lim'] == 'max':
+                    pior = df_viol.loc[df_viol[coluna_alvo].idxmax()]
+                    texto_pior = f"Máxima histórica: {pior[coluna_alvo]:.2f}"
+                else:
+                    pior = df_viol.iloc[(df_viol[coluna_alvo] - (lim[0]+lim[1])/2).abs().argmax()]
+                    texto_pior = f"Pico fora da faixa: {pior[coluna_alvo]:.2f}"
+                fig_t.add_annotation(
+                    x=pior['data'], y=pior[coluna_alvo],
+                    text=f"<b>{pior['data'].strftime('%b/%Y')}</b><br>{texto_pior}",
+                    showarrow=True, arrowhead=2, arrowcolor='#c0392b',
+                    bgcolor='rgba(255,255,255,0.9)', bordercolor='#c0392b',
+                    font=dict(color='#c0392b', size=11),
+                    ax=40, ay=-50
+                )
+
+            fig_t.update_layout(
+                title=f"{parametro_selecionado} — tendência {frequencia.lower()}",
+                xaxis_title=None,
+                yaxis_title=cfg['ylabel'],
+                height=460,
+                hovermode='x unified',
+                legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
+                margin=dict(l=10, r=10, t=60, b=10),
+                plot_bgcolor='rgba(0,0,0,0)'
+            )
+            fig_t.update_xaxes(showgrid=True, gridcolor='rgba(128,128,128,0.15)')
+            fig_t.update_yaxes(showgrid=True, gridcolor='rgba(128,128,128,0.15)')
+
+            st.plotly_chart(fig_t, width="stretch")
+
+            # Resumo narrativo embaixo do gráfico
+            total_pts = len(df_temp)
+            n_viol = int(df_temp['violou'].sum())
+            if cfg['tipo_lim'] != 'none' and total_pts > 0:
+                pct_viol = n_viol / total_pts * 100
+                if n_viol == 0:
+                    st.success(f"✅ Nos {total_pts} períodos analisados, **nenhum** violou o limite CONAMA.")
+                else:
+                    # Tendência: compara MM inicial e final
+                    mm_ini = df_temp['mm'].iloc[0]
+                    mm_fim = df_temp['mm'].iloc[-1]
+                    if cfg['tipo_lim'] == 'min':
+                        direcao = "melhorando 📈" if mm_fim > mm_ini else "piorando 📉"
+                    elif cfg['tipo_lim'] == 'max':
+                        direcao = "melhorando 📉" if mm_fim < mm_ini else "piorando 📈"
+                    else:
+                        direcao = "estável"
+                    st.warning(
+                        f"⚠️ **{n_viol} de {total_pts}** períodos ({pct_viol:.1f}%) violaram o limite CONAMA. "
+                        f"Tendência geral (média móvel): **{direcao}** "
+                        f"({mm_ini:.2f} → {mm_fim:.2f})."
+                    )
         else:
             st.info(f"Sem dados suficientes de {parametro_selecionado} para gerar o gráfico.")
     else:

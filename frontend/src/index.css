@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    background: #f6f9fb;
+    color: #13242f;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  .micro {
+    @apply font-mono uppercase text-ink3;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+  .card {
+    @apply bg-paper border border-hair rounded-xl shadow-card;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Tabs */
+  .op-tab {
+    @apply relative font-semibold text-ink3 cursor-pointer whitespace-nowrap;
+    padding: 14px 2px;
+    font-size: 14px;
+    transition: color 0.15s;
+  }
+  .op-tab:hover {
+    @apply text-ink;
+  }
+  .op-tab.on {
+    @apply text-blue;
+  }
+  .op-tab.on::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    @apply bg-blue;
+  }
+
+  /* Chips de período */
+  .op-chip {
+    @apply inline-flex items-center gap-1.5 font-semibold cursor-pointer;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 12.5px;
+    border: 1px solid transparent;
+    transition: all 0.12s;
+  }
+  .op-chip.on {
+    @apply bg-navy text-white;
+  }
+  .op-chip.off {
+    @apply bg-paper text-ink2 border-hair;
+  }
+  .op-chip.off:hover {
+    @apply border-blueMid text-blue;
+  }
+
+  /* Linha de rio na sidebar */
+  .op-rio {
+    @apply flex items-center gap-2.5 cursor-pointer rounded-lg;
+    padding: 9px 10px;
+    transition: background 0.12s;
+  }
+  .op-rio:hover {
+    @apply bg-blueLt;
+  }
+
+  /* Linha de tabela */
+  .op-row {
+    transition: background 0.12s;
+  }
+  .op-row:hover {
+    @apply bg-blueLt;
+  }
+
+  /* Botões */
+  .op-btn {
+    @apply inline-flex items-center gap-2 font-semibold cursor-pointer bg-paper text-ink border border-hair;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: all 0.12s;
+  }
+  .op-btn:hover {
+    @apply border-blueMid text-blue;
+  }
+  .op-btn.pri {
+    @apply bg-blue text-white border-blue;
+  }
+  .op-btn.pri:hover {
+    @apply bg-navy text-white;
+  }
+}
